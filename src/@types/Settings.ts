@@ -1,4 +1,4 @@
 export interface Settings {
-  primaryColor: string;
-  amountOptions: number[];
+  primaryColor: string
+  amountOptions: Array<number>
 }
