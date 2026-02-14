@@ -1,8 +1,6 @@
 import useDeviceDetect from "@/hooks/useDeviceDetect";
 import { MdOutlineInstallMobile } from "react-icons/md";
-import { FaApple } from "react-icons/fa";
-import { SiWindows } from "react-icons/si";
-import { FaLinux } from "react-icons/fa";
+import { FaApple, FaLinux, FaWindows } from "react-icons/fa";
 
 interface InstallButtonProps {
   handleInstall: () => void;
@@ -20,7 +18,7 @@ const InstallButton = ({ handleInstall }: InstallButtonProps) => {
       >
         <span className="hidden md:inline-block">Install on {deviceType}</span>
         {deviceType && deviceType === "Mac" && <FaApple />}
-        {deviceType && deviceType === "Windows" && <SiWindows />}
+        {deviceType && deviceType === "Windows" && <FaWindows />}
         {deviceType && deviceType === "Linux" && <FaLinux />}
         {deviceType && deviceType === "Mobile" && <MdOutlineInstallMobile />}
       </button>

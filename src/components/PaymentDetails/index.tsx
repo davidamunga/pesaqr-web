@@ -1,17 +1,17 @@
-import { TRANSACTION_TYPE } from "@/@types/TransactionType";
-import { AppContext, AppContextType } from "@/context/AppContext";
-import React, { useContext } from "react";
-import { Input } from "../ui/input";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import classNames from "classnames";
-import { Checkbox } from "../ui/checkbox";
-import { NumericFormat } from "react-number-format";
+import { TRANSACTION_TYPE } from '@/@types/TransactionType'
+import { useAppStore } from '@/store/useAppStore'
+import React from 'react'
+import { Input } from '../ui/input'
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
+import classNames from 'classnames'
+import { Checkbox } from '../ui/checkbox'
+import { NumericFormat } from 'react-number-format'
 
 const PaymentDetails = () => {
-  const { data, setData } = useContext(AppContext) as AppContextType;
+  const { data, updateData } = useAppStore()
 
   return (
-    <div className="flex flex-col space-y-2 bg-gray-800 p-2 rounded-md border border-gray-700">
+    <div className="flex flex-col space-y-2 bg-zinc-800 p-2 rounded-md border border-zinc-700">
       <div
         style={{ borderColor: data.color }}
         className="flex flex-col pb-2 bg-white   overflow-hidden rounded-md border-2 w-full"
@@ -20,14 +20,13 @@ const PaymentDetails = () => {
           value={data.type}
           className="w-full flex flex-col"
           onValueChange={(value) =>
-            setData({
-              ...data,
+            updateData({
               type: value as TRANSACTION_TYPE,
               hideAmount: false,
             })
           }
         >
-          <TabsList className="w-full grid h-20 md:h-10  gap-2 place-content-center py-6 justify-center grid-row-2 md:grid-row-1 grid-cols-2 md:grid-cols-4">
+          <TabsList className="w-full grid  h-20 md:h-10  gap-2 place-content-center py-6 justify-center grid-row-2 md:grid-row-1 grid-cols-2 md:grid-cols-4">
             <TabsTrigger value={TRANSACTION_TYPE.TILL_NUMBER}>TILL</TabsTrigger>
             <TabsTrigger className="" value={TRANSACTION_TYPE.PAYBILL}>
               PAYBILL
@@ -42,11 +41,11 @@ const PaymentDetails = () => {
         </Tabs>
         <Input
           style={{ background: data.color }}
-          className="text-xl md:text-3xl  text-white py-1 text-center rounded-none border-none font-bold font-display placeholder:text-white"
+          className="text-xl md:text-3xl  text-white py-1 text-center rounded-none border-none font-extrabold font-display placeholder:text-white"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setData({ ...data, name: e.target.value.toUpperCase() });
+            updateData({ name: e.target.value.toUpperCase() })
           }}
-          value={data.name ?? ""}
+          value={data.name ?? ''}
           placeholder="Enter Name Here"
         />
 
@@ -55,7 +54,7 @@ const PaymentDetails = () => {
             <>
               <p
                 style={{ color: data.color }}
-                className=" font-display text-center py-1  text-xl md:text-3xl"
+                className=" font-display font-extrabold text-center py-1  text-xl md:text-3xl"
               >
                 PHONE NUMBER
               </p>
@@ -66,7 +65,7 @@ const PaymentDetails = () => {
                       value.floatValue != undefined &&
                       value.floatValue.toString().length <= 12
                     ) {
-                      setData({ ...data, phoneNumber: value.value });
+                      updateData({ phoneNumber: value.value })
                     }
                   }}
                   inputMode="numeric"
@@ -75,7 +74,7 @@ const PaymentDetails = () => {
                   allowNegative={false}
                   allowLeadingZeros={true}
                   placeholder="Enter Phone Number"
-                  className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display text-xl md:text-3xl   text-gray-900 rounded-none  "
+                  className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display font-extrabold text-xl md:text-3xl   text-zinc-900 rounded-none  "
                 />
               </div>
             </>
@@ -84,7 +83,7 @@ const PaymentDetails = () => {
             <>
               <p
                 style={{ color: data.color }}
-                className=" font-display text-center py-1  text-xl md:text-3xl"
+                className=" font-display font-extrabold text-center py-1  text-xl md:text-3xl"
               >
                 TILL NUMBER
               </p>
@@ -95,7 +94,7 @@ const PaymentDetails = () => {
                       value.floatValue != undefined &&
                       value.floatValue.toString().length <= 12
                     ) {
-                      setData({ ...data, tillNumber: value.value });
+                      updateData({ tillNumber: value.value })
                     }
                   }}
                   inputMode="numeric"
@@ -104,7 +103,7 @@ const PaymentDetails = () => {
                   allowNegative={false}
                   allowLeadingZeros={true}
                   placeholder="Enter Till Number"
-                  className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display text-xl md:text-3xl   text-gray-900 rounded-none  "
+                  className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display font-extrabold  text-xl md:text-3xl   text-zinc-900 rounded-none  "
                 />
               </div>
             </>
@@ -113,7 +112,7 @@ const PaymentDetails = () => {
             <>
               <p
                 style={{ color: data.color }}
-                className=" font-display text-center  text-xl md:text-3xl"
+                className=" font-display font-extrabold text-center  text-xl md:text-3xl"
               >
                 PAYBILL NUMBER
               </p>
@@ -124,7 +123,7 @@ const PaymentDetails = () => {
                       value.floatValue != undefined &&
                       value.floatValue.toString().length <= 12
                     ) {
-                      setData({ ...data, paybillNumber: value.value });
+                      updateData({ paybillNumber: value.value })
                     }
                   }}
                   inputMode="numeric"
@@ -133,19 +132,22 @@ const PaymentDetails = () => {
                   allowNegative={false}
                   allowLeadingZeros={true}
                   placeholder="Enter Paybill Number"
-                  className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display text-xl md:text-3xl   text-gray-900 rounded-none  "
+                  className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display font-extrabold text-xl md:text-3xl   text-zinc-900 rounded-none  "
                 />
               </div>
-              <p className="text-green-600 font-display text-center text-xl md:text-3xl">
+              <p
+                style={{ color: data.color }}
+                className=" font-display font-extrabold text-center text-xl md:text-3xl"
+              >
                 ACCOUNT NUMBER
               </p>
               <Input
                 onChange={(e) => {
-                  setData({ ...data, accountNumber: e.target.value });
+                  updateData({ accountNumber: e.target.value })
                 }}
                 value={data.accountNumber}
                 placeholder="Enter Account Number"
-                className="rounded-none py-2 md:py-4 tracking-widest mx-auto w-full border-none  text-center bg-white font-display text-xl md:text-3xl   text-gray-900  "
+                className="rounded-none py-2 md:py-4 tracking-widest mx-auto w-full border-none font-extrabold  text-center bg-white font-display  text-xl md:text-3xl   text-zinc-900  "
               />
             </>
           )}
@@ -153,7 +155,7 @@ const PaymentDetails = () => {
             <>
               <p
                 style={{ color: data.color }}
-                className=" font-display text-center  text-xl md:text-3xl"
+                className=" font-display font-extrabold text-center  text-xl md:text-3xl"
               >
                 AGENT NUMBER
               </p>
@@ -164,7 +166,7 @@ const PaymentDetails = () => {
                       value.floatValue != undefined &&
                       value.floatValue.toString().length <= 12
                     ) {
-                      setData({ ...data, agentNumber: value.value });
+                      updateData({ agentNumber: value.value })
                     }
                   }}
                   inputMode="numeric"
@@ -173,12 +175,12 @@ const PaymentDetails = () => {
                   allowNegative={false}
                   allowLeadingZeros={true}
                   placeholder="Enter Agent Number"
-                  className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display text-xl md:text-3xl   text-gray-900 rounded-none  "
+                  className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display font-extrabold text-xl md:text-3xl   text-zinc-900 rounded-none  "
                 />
               </div>
               <p
                 style={{ color: data.color }}
-                className=" font-display text-center text-xl md:text-3xl"
+                className=" font-display font-extrabold text-center text-xl md:text-3xl"
               >
                 STORE NUMBER
               </p>
@@ -188,7 +190,7 @@ const PaymentDetails = () => {
                     value.floatValue != undefined &&
                     value.floatValue.toString().length <= 12
                   ) {
-                    setData({ ...data, storeNumber: value.value });
+                    updateData({ storeNumber: value.value })
                   }
                 }}
                 inputMode="numeric"
@@ -197,7 +199,7 @@ const PaymentDetails = () => {
                 allowNegative={false}
                 allowLeadingZeros={true}
                 placeholder="Enter Store Number"
-                className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display text-xl md:text-3xl   text-gray-900 rounded-none  "
+                className=" py-2 md:py-4 tracking-widest mx-auto w-full border-none bg-transparent  text-center  font-display font-extrabold text-xl md:text-3xl   text-zinc-900 rounded-none  "
               />
             </>
           )}
@@ -207,12 +209,12 @@ const PaymentDetails = () => {
                 id="hideAmount"
                 checked={data.hideAmount}
                 onCheckedChange={(checked) =>
-                  setData({ ...data, hideAmount: checked ? true : false })
+                  updateData({ hideAmount: checked ? true : false })
                 }
               />
               <label
                 htmlFor="hideAmount"
-                className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="text-sm font-medium leading-none text-zinc-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Hide amount
               </label>
@@ -221,7 +223,7 @@ const PaymentDetails = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PaymentDetails;
+export default PaymentDetails
