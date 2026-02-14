@@ -20,7 +20,11 @@ const PaymentDetails = () => {
           value={data.type}
           className="w-full flex flex-col"
           onValueChange={(value) =>
-            setData({ ...data, type: value as TRANSACTION_TYPE })
+            setData({
+              ...data,
+              type: value as TRANSACTION_TYPE,
+              hideAmount: false,
+            })
           }
         >
           <TabsList className="w-full grid h-20 md:h-10  gap-2 place-content-center py-6 justify-center grid-row-2 md:grid-row-1 grid-cols-2 md:grid-cols-4">
@@ -47,7 +51,7 @@ const PaymentDetails = () => {
         />
 
         <div className="flex flex-col h-full space-y-1 border-none bg-white">
-        {data.type === TRANSACTION_TYPE.SEND_MONEY && (
+          {data.type === TRANSACTION_TYPE.SEND_MONEY && (
             <>
               <p
                 style={{ color: data.color }}
@@ -213,7 +217,7 @@ const PaymentDetails = () => {
                 Hide amount
               </label>
             </div>
-            )} 
+          )}
         </div>
       </div>
     </div>
