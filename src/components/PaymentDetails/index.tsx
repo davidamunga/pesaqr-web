@@ -18,7 +18,7 @@ const PaymentDetails = () => {
       >
         <Tabs
           value={data.type}
-          className="w-full flex flex-col"
+          className="w-full flex flex-col py-4  bg-zinc-100 md:py-0"
           onValueChange={(value) =>
             updateData({
               type: value as TRANSACTION_TYPE,
@@ -26,7 +26,7 @@ const PaymentDetails = () => {
             })
           }
         >
-          <TabsList className="w-full grid  h-20 md:h-10  gap-2 place-content-center py-6 justify-center grid-row-2 md:grid-row-1 grid-cols-2 md:grid-cols-4">
+          <TabsList className="w-full grid  h-20 md:h-10 bg-transparent  gap-2 place-content-center py-6 justify-center grid-row-2 md:grid-row-1 grid-cols-2 md:grid-cols-4">
             <TabsTrigger value={TRANSACTION_TYPE.TILL_NUMBER}>TILL</TabsTrigger>
             <TabsTrigger className="" value={TRANSACTION_TYPE.PAYBILL}>
               PAYBILL
