@@ -16,7 +16,7 @@ export const generateQRCode = (data: FormData): string | null => {
     case TRANSACTION_TYPE.TILL_NUMBER:
       return `BG|${tillNumber}${data.hideAmount ? `` : `|${amount}`}`
     case TRANSACTION_TYPE.PAYBILL:
-      return `PB|${paybillNumber}${amount ? `|${amount}` : ''}|${accountNumber}`
+      return `PB|${paybillNumber}${amount !=undefined && amount?.length > 0 ? `|${amount}` : ''}${accountNumber!=undefined &&accountNumber?.length > 0 ? `|${accountNumber}` : ''}`
     case TRANSACTION_TYPE.AGENT:
       return `WA|${agentNumber}|${amount}|${storeNumber}`
     case TRANSACTION_TYPE.SEND_MONEY:
